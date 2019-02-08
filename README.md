@@ -32,13 +32,13 @@ You could have your `$GOPATH` pointing to any directory you like.
 Given `$GOPATH$` set, we could git clone the source code of our project and all its dependencies, including `google.golang.org/grpc`, by running:
 
 ```bash
-go get github.com/wangkuiyi/multi-stream-grpc
+go get github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env
 ```
 
 To build this demo, we need the protobuf compiler, Go compiler, Python interpreter, gRPC extension to protobuf compiler.  To ease the installation and configuration of these tools, I provide a Dockerfile to install them into a Docker image. To build the Docker image
 
 ```bash
-cd $GOPATH/src/github.com/wangkuiyi/multi-stream-grpc
+cd $GOPATH/src/github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env
 docker build -t grpc .
 ```
 
@@ -46,8 +46,8 @@ To run the container, we need to map the `$GOPATH` directory on the host into th
 
 ```bash
 docker run --rm -it \
-    -v $PWD:/go/src/github.com/wangkuiyi/multi-stream-grpc \
-    -w /go/src/github.com/wangkuiyi/multi-stream-grpc \
+    -v $PWD:/go/src/github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env \
+    -w /go/src/github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env \
     grpc bash
 ```
 
