@@ -1,6 +1,12 @@
 This repo demonstrates how to write a gRPC server in Go and a client in Python.
 
-A secondary motivation of this project is to show how to create a canonical development environment for Go and Python programmers using Docker.  We will build a Docker image that contains development tools:
+## Canonical Development Environment
+
+A secondary motivation of this project is to show how to create a canonical development environment for Go and Python programmers using Docker.  
+
+### Building in Container
+
+We will build a Docker image that contains development tools:
 
 1. The Python interpreter
 1. The Go compiler
@@ -8,7 +14,9 @@ A secondary motivation of this project is to show how to create a canonical deve
 1. The protobuf to Go compiler extension
 1. The protobuf to Python compiler extension
 
-When we use this Docker image for daily development work, the source code relies in the host computer instead of the container.  The source ocde includes this repo and all its dependencies, for example, the Go package `google.golang.org/grpc`.
+### Editing on Host
+
+When we use this Docker image for daily development work, the source code relies in the host computer instead of the container.  The source ocde includes this repo and all its dependencies, for example, the Go package `google.golang.org/grpc`.  This allows us to run our favorite editors (Emacs, VIM, Eclipse, etc) on the host.  Please free to rely on editors addons to analyze the source code for auto-completion.
 
 
 ## How to Build
