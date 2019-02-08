@@ -10,13 +10,14 @@ import (
 	"net"
 
 	pb "github.com/wangkuiyi/multi-stream-grpc/proto"
+	"google.golang.org/grpc"
 )
 
 type sqlFlowServer struct {
 }
 
 func (s *sqlFlowServer) Run(ctx context.Context, sql *pb.SQL) (*pb.Job, error) {
-	return &pb.Job{id: 100}, nil
+	return &pb.Job{Id: 100}, nil
 }
 
 func main() {
@@ -28,6 +29,6 @@ func main() {
 		log.Fatalf("failed to listen: %v", e)
 	}
 	grpcServer := grpc.NewServer()
-	pb.RegisteouteGuideServer(grpcServer, &sqlFlowServer{})
+	pb.RegisterSQLFlowServer(grpcServer, &sqlFlowServer{})
 	grpcServer.Serve(lis)
 }
