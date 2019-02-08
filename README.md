@@ -1,24 +1,36 @@
 This repo demonstrates how to write a gRPC server in Go and a client in Python.
 
+A secondary motivation of this project is to show how to create a canonical development environment for Go and Python programmers using Docker.  We will build a Docker image that contains development tools:
+
+1. The Python interpreter
+1. The Go compiler
+1. The protobuf compiler
+1. The protobuf to Go compiler extension
+1. The protobuf to Python compiler extension
+
+When we use this Docker image for daily development work, the source code relies in the host computer instead of the container.  The source ocde includes this repo and all its dependencies, for example, the Go package `google.golang.org/grpc`.
+
+
 ## How to Build
 
-Because this repo contains Go code, please make sure that you have the directory structure required by Go.  On my laptop computer, I would do
+Because this repo contains Go code, please make sure that you have the directory structure required by Go.  On my laptop computer, I have
 
 ```bash
-mkdir -p ~/work/src/github.com/wangkuiyi # or any other directory
+export GOPATH=$HOME/go
 ```
 
-To retrieve the source code into the correct directory:
+You could have your `$GOPATH` pointing to any directory you like.
+
+Given `$GOPATH$` set, we could git clone the source code of our project and all its dependencies, including `google.golang.org/grpc`, by running:
 
 ```bash
-cd ~/work/src/github.com/wangkuiyi
-git clone https://github.com/wangkuiyi/multi-stream-grpc
+go get github.com/wangkuiyi/multi-stream-grpc
 ```
 
 To build this demo, we need the protobuf compiler, Go compiler, Python interpreter, gRPC extension to protobuf compiler.  To ease the installation and configuration of these tools, I provide a Dockerfile to install them into a Docker image. To build the Docker image
 
 ```bash
-cd multi-stream-grpc
+cd $GOPATH/src/github.com/wangkuiyi/multi-stream-grpc
 docker build -t grpc .
 ```
 
@@ -34,11 +46,22 @@ docker run --rm -it \
 Now, in the container, we can compile the `sqlflow.proto` in this repo into the Go source code:
 
 ```bash
-protoc sqlflow.proto --go_out=plugins=grpc:.
+protoc -I proto proto/sqlflow.proto --go_out=plugin=grpc:proto
 ```
 
 Similarly, we can compile it into Python:
 
 ```bash
-python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. sqlflow.proto
+python -m grpc_tools.protoc -I proto --python_out=proto --grpc_python_out=proto sqlflow.proto
 ```
+
+To build the Go server:
+
+```bash
+cd server
+go get -u ./...
+go generate
+go build
+```
+
+where the `go get -u ./...` retrieves and updates Go dependencies of our server, `go generate` invokes the `protoc` command to translate `proto/sqlflow.proto` into `proto/sqlflow.pb.go`, and `go build` builds the server into `./server`.
