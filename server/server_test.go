@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"net"
 	"testing"
 	"time"
@@ -32,5 +31,7 @@ func TestRunJob(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	j, e := client.Run(ctx, &pb.SQL{Sql: "SELECT *"})
-	fmt.Println(j)
+	if j.Id != 100 {
+		t.Errorf("Expecting 100, got %d", j.Id)
+	}
 }

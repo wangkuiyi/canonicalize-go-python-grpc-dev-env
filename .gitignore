@@ -1,3 +1,5 @@
 *~
 sqlflow.pb.go
 sqlflow_pb2*.py
+__pycache__
+main.test

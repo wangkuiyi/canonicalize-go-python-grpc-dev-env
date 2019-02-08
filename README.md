@@ -52,8 +52,10 @@ protoc -I proto proto/sqlflow.proto --go_out=plugin=grpc:proto
 Similarly, we can compile it into Python:
 
 ```bash
-python -m grpc_tools.protoc -I proto --python_out=proto --grpc_python_out=proto sqlflow.proto
+python -m grpc_tools.protoc -I proto --python_out=client --grpc_python_out=client sqlflow.proto
 ```
+
+Please be aware that the Go toolchain requires that the generated Go source files be in the same directory as the `.proto` file, which is a separate directory than the server source code, whereas the Python convention is to put generated files with the client source code.
 
 To build the Go server:
 
@@ -61,7 +63,20 @@ To build the Go server:
 cd server
 go get -u ./...
 go generate
-go build
+go install
 ```
 
-where the `go get -u ./...` retrieves and updates Go dependencies of our server, `go generate` invokes the `protoc` command to translate `proto/sqlflow.proto` into `proto/sqlflow.pb.go`, and `go build` builds the server into `./server`.
+where the `go get -u ./...` retrieves and updates Go dependencies of our server, `go generate` invokes the `protoc` command to translate `proto/sqlflow.proto` into `proto/sqlflow.pb.go`, and `go install` builds the server into `$GOPATH/bin/server`.
+
+To run the Go server:
+
+```bash
+$GOPATH/bin/server &
+```
+
+To run the Python client:
+
+```bash
+cd ../client
+python client_test.py
+```
