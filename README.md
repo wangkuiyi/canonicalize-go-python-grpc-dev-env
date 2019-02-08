@@ -28,8 +28,14 @@ To run the container, we need to map the `$GOPATH` directory on the host into th
 docker run --rm -it -v $GOPATH:/go -w /go/src/github.com/wangkuiyi/multi-stream-grpc grpc bash
 ```
 
-Now, in the container, we can build the `sqlflow.proto` in this repo:
+Now, in the container, we can compile the `sqlflow.proto` in this repo into the Go source code:
 
 ```bash
 protoc sqlflow.proto --go_out=plugins=grpc:.
+```
+
+Similarly, we can compile it into Python:
+
+```bash
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. sqlflow.proto
 ```
