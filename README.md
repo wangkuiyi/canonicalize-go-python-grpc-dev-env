@@ -49,7 +49,7 @@ protoc -I proto proto/sqlflow.proto --go_out=plugin=grpc:proto
 Similarly, we can compile it into Python:
 
 ```bash
-python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. sqlflow.proto
+python -m grpc_tools.protoc -I proto --python_out=proto --grpc_python_out=proto sqlflow.proto
 ```
 
 To build the Go server:
