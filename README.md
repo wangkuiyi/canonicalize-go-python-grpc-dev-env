@@ -31,7 +31,7 @@ docker run --rm -it -v $GOPATH:/go -w /go/src/github.com/wangkuiyi/multi-stream-
 Now, in the container, we can compile the `sqlflow.proto` in this repo into the Go source code:
 
 ```bash
-protoc sqlflow.proto --go_out=plugins=grpc:.
+protoc -I proto proto/sqlflow.proto --go_out=plugin=grpc:proto
 ```
 
 Similarly, we can compile it into Python:

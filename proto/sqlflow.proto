@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package sqlflow;
+package proto;
 
 service SQLFlow {
   rpc Run(SQL) returns (Job) {}
