@@ -19,5 +19,4 @@ RUN rm protoc-3.6.1-linux-x86_64.zip
 RUN mkdir -p /go
 ENV GOPATH /go
 RUN go get github.com/golang/protobuf/protoc-gen-go
-RUN go get google.golang.org/grpc
-ENV PATH $GOPATH/bin:$PATH
+RUN mv /go/bin/protoc-gen-go /usr/local/bin/

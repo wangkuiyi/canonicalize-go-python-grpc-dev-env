@@ -33,5 +33,4 @@ func TestRunJob(t *testing.T) {
 	defer cancel()
 	j, e := client.Run(ctx, &pb.SQL{Sql: "SELECT *"})
 	fmt.Println(j)
-
 }

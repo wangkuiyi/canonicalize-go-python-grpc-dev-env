@@ -2,23 +2,24 @@ This repo demonstrates how to write a gRPC server in Go and a client in Python.
 
 ## How to Build
 
-Because this repo contains Go code, please make sure that you have the directory structure required by Go.  On my laptop computer, I would do
+Because this repo contains Go code, please make sure that you have the directory structure required by Go.  On my laptop computer, I have
 
 ```bash
-mkdir -p ~/work/src/github.com/wangkuiyi # or any other directory
+export GOPATH=$HOME/go
 ```
 
-To retrieve the source code into the correct directory:
+You could have your `$GOPATH` pointing to any directory you like.
+
+Given `$GOPATH$` set, we could git clone the source code of our project and all its dependencies, including `google.golang.org/grpc`, by running:
 
 ```bash
-cd ~/work/src/github.com/wangkuiyi
-git clone https://github.com/wangkuiyi/multi-stream-grpc
+go get github.com/wangkuiyi/multi-stream-grpc
 ```
 
 To build this demo, we need the protobuf compiler, Go compiler, Python interpreter, gRPC extension to protobuf compiler.  To ease the installation and configuration of these tools, I provide a Dockerfile to install them into a Docker image. To build the Docker image
 
 ```bash
-cd multi-stream-grpc
+cd $GOPATH/src/github.com/wangkuiyi/multi-stream-grpc
 docker build -t grpc .
 ```
 
@@ -39,3 +40,14 @@ Similarly, we can compile it into Python:
 ```bash
 python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. sqlflow.proto
 ```
+
+To build the Go server:
+
+```bash
+cd server
+go get -u ./...
+go generate
+go build
+```
+
+where the `go get -u ./...` retrieves and updates Go dependencies of our server, `go generate` invokes the `protoc` command to translate `proto/sqlflow.proto` into `proto/sqlflow.pb.go`, and `go build` builds the server into `./server`.
