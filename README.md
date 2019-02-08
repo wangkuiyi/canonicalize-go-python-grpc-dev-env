@@ -12,7 +12,7 @@ To retrieve the source code into the correct directory:
 
 ```bash
 cd ~/work/src/github.com/wangkuiyi
-git clone multi-stream-grpc
+git clone https://github.com/wangkuiyi/multi-stream-grpc
 ```
 
 To build this demo, we need the protobuf compiler, Go compiler, Python interpreter, gRPC extension to protobuf compiler.  To ease the installation and configuration of these tools, I provide a Dockerfile to install them into a Docker image. To build the Docker image
