@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package sqlflow;
+
+service SQLFlow {
+  rpc Run(SQL) returns (Job) {}
+}
+
+message SQL {
+  string sql = 1;
+}
+
+message Job {
+  uint64 id = 1;
+}
