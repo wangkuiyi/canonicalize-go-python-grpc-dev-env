@@ -26,8 +26,8 @@ To run the container, we need to map the `$GOPATH` directory on the host into th
 
 ```bash
 docker run --rm -it \
-    -v $PWD:/go/github.com/wangkuiyi/multi-stream-grpc \
-    -w /go/github.com/wangkuiyi/multi-stream-grpc \
+    -v $PWD:/go/src/github.com/wangkuiyi/multi-stream-grpc \
+    -w /go/src/github.com/wangkuiyi/multi-stream-grpc \
     grpc bash
 ```
 
