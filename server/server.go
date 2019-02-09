@@ -9,7 +9,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/wangkuiyi/multi-stream-grpc/proto"
+	pb "github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env/proto"
 	"google.golang.org/grpc"
 )
 
