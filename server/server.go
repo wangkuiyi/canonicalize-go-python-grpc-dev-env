@@ -20,6 +20,14 @@ func (s *sqlFlowServer) Run(ctx context.Context, sql *pb.SQL) (*pb.Job, error) {
 	return &pb.Job{Id: 100}, nil
 }
 
+func (s *sqlFlowServer) ReadStderr(*pb.Job, pb.SQLFlow_ReadStderrServer) error {
+	return nil
+}
+
+func (s *sqlFlowServer) ReadStdout(*pb.Job, pb.SQLFlow_ReadStdoutServer) error {
+	return nil
+}
+
 func main() {
 	port := flag.Int("port", 10000, "The server port")
 	flag.Parse()

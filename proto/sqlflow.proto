@@ -4,6 +4,8 @@ package proto;
 
 service SQLFlow {
   rpc Run(SQL) returns (Job) {}
+  rpc ReadStderr(Job) returns (stream Line) {}
+  rpc ReadStdout(Job) returns (stream Line) {}
 }
 
 message SQL {
@@ -12,4 +14,8 @@ message SQL {
 
 message Job {
   uint64 id = 1;
+}
+
+message Line {
+  string line = 1;
 }
