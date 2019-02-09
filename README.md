@@ -6,7 +6,7 @@ A secondary motivation of this project is to show how to create a canonical deve
 
 ### Building in Container
 
-We will build a Docker image that contains development tools:
+We build a Docker image that contains development tools:
 
 1. The Python interpreter
 1. The Go compiler
@@ -16,7 +16,7 @@ We will build a Docker image that contains development tools:
 
 ### Editing on Host
 
-When we use this Docker image for daily development work, the source code relies in the host computer instead of the container.  The source ocde includes this repo and all its dependencies, for example, the Go package `google.golang.org/grpc`.  This allows us to run our favorite editors (Emacs, VIM, Eclipse, etc) on the host.  Please free to rely on editors addons to analyze the source code for auto-completion.
+When we use this Docker image for daily development work, the source code relies on the host computer instead of the container.  The source code includes this repo and all its dependencies, for example, the Go package `google.golang.org/grpc`.  Code-on-the-host allows us to run our favorite editors (Emacs, VIM, Eclipse, and more) on the host.  Please free to rely on editors add-ons to analyze the source code for auto-completion.
 
 
 ## How to Build
@@ -35,7 +35,7 @@ Given `$GOPATH$` set, we could git clone the source code of our project and all 
 go get github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env
 ```
 
-To build this demo, we need the protobuf compiler, Go compiler, Python interpreter, gRPC extension to protobuf compiler.  To ease the installation and configuration of these tools, I provide a Dockerfile to install them into a Docker image. To build the Docker image
+To build this demo, we need the protobuf compiler, Go compiler, Python interpreter, gRPC extension to the protobuf compiler.  To ease the installation and configuration of these tools, I provide a Dockerfile to install them into a Docker image. To build the Docker image:
 
 ```bash
 cd $GOPATH/src/github.com/wangkuiyi/canonicalize-go-python-grpc-dev-env
@@ -63,7 +63,7 @@ Similarly, we can compile it into Python:
 python -m grpc_tools.protoc -I proto --python_out=client --grpc_python_out=client sqlflow.proto
 ```
 
-Please be aware that the Go toolchain requires that the generated Go source files be in the same directory as the `.proto` file, which is a separate directory than the server source code, whereas the Python convention is to put generated files with the client source code.
+Please be aware that the Go toolchain requires that the generated Go source files in the same directory as the `.proto` file, which is a separate directory than the server source code, whereas the Python convention is to put generated files with the client source code.
 
 To build the Go server:
 
@@ -72,9 +72,10 @@ cd server
 go get -u ./...
 go generate
 go install
+go test
 ```
 
-where the `go get -u ./...` retrieves and updates Go dependencies of our server, `go generate` invokes the `protoc` command to translate `proto/sqlflow.proto` into `proto/sqlflow.pb.go`, and `go install` builds the server into `$GOPATH/bin/server`.
+where the `go get -u ./...` retrieves and updates Go dependencies of our server, `go generate` invokes the `protoc` command to translate `proto/sqlflow.proto` into `proto/sqlflow.pb.go`, `go install` builds the server into `$GOPATH/bin/server`, and `go test` builds and run unit tests, which runs the gRPC server in a goroutine and the client in another goroutine.
 
 To run the Go server:
 
